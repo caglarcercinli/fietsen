@@ -42,8 +42,7 @@ public class JpaDocentRepository implements DocentRepository{
 
     @Override
     public List<Docent> findByWeddeBetween(BigDecimal van, BigDecimal tot) {
-        return manager.createQuery(
-                "select d from Docent d where d.wedde between :van and :tot",Docent.class)
+        return manager.createNamedQuery("Docent.findByWeddeBetween",Docent.class)
                 .setParameter("van",van)
                 .setParameter("tot",tot)
                 .getResultList();
@@ -77,4 +76,12 @@ public class JpaDocentRepository implements DocentRepository{
                 AantalDocentenPerWedde.class)
                 .getResultList();
     }
+
+    @Override
+    public int algemeneOpslag(BigDecimal percentage) {
+        return manager.createNamedQuery("Docent.algemeneOpslag")
+                .setParameter("percentage",percentage)
+                .executeUpdate();
+    }
+
 }
